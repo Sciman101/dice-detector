@@ -1,7 +1,7 @@
-I = imread("test/topdown.png");
+I = imread("test/3.jpg");
 
 bounding_boxes = get_bounding_boxes(I,300);
-[centers,radii] = pipcounter(I, 10, 50);
+[centers,radii] = pipcounter(I, 6, 22);
 
 % Count pips within each bounding box
 dice_values = zeros(size(bounding_boxes,1),1,'uint8');
