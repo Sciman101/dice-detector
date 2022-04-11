@@ -16,6 +16,6 @@ function bounding_boxes = get_bounding_boxes(I, area_threshhold)
    end
   end
   % trim array
-  b = bounding_boxes(bounding_boxes > 0);
+  b = bounding_boxes(bounding_boxes ~= 0);
   bounding_boxes = reshape(b, [], 4);
 end

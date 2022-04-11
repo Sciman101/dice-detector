@@ -24,7 +24,7 @@ function [bounding_boxes, dice_values] = processDice(I, v)
             i = i + 1;
         end
     end
-    b = bounding_boxes(bounding_boxes > 0);
+    b = bounding_boxes(bounding_boxes ~= 0);
     bounding_boxes = reshape(b, [], 4);    
     dice_values = dice_values(dice_values >= 1);
     dice_values = dice_values.'; % transpose
