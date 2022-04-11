@@ -23,7 +23,7 @@ function [centers,radii] = pipcounter(image,minRadius,maxRadius)
             p2 = centers(j,:);
             d = (p1(1)-p2(1))^2 + (p1(2)-p2(2))^2;
             r = (radii(i)+radii(j));
-            if d <= r*r
+            if d <= r*r || (abs(p2(2)-p1(2)) < r && d <= r*r*2)
               mask(i) = 1;
               break
             end
