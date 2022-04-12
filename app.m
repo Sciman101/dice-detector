@@ -30,7 +30,7 @@ clear cam;
 
 
 % Called when we press 'capture'
-function takeScreenshot(src,event)
+function takeScreenshot(src, event)
     frame = evalin('base','currFrame');
     disp('captured');
     imshow(frame);

@@ -1,25 +1,25 @@
-I = imread("test/3.jpg");
+I1 = imread("test/1.jpg");
+I2 = imread("test/2.jpg");
+I3 = imread("test/3.jpg");
+I4 = imread("test/4.jpg");
+I5 = imread("test/5.jpg");
+I6 = imread("test/6.jpg");
+I7 = imread("test/7.jpg");
 
-bounding_boxes = get_bounding_boxes(I,300);
-[centers,radii] = pipcounter(I, 6, 22);
 
-% Count pips within each bounding box
-dice_values = zeros(size(bounding_boxes,1),1,'uint8');
-for j=1 : size(bounding_boxes, 1)
-    box = bounding_boxes(j,:);
-    for p=1 : length(centers)
-        point = centers(p,:);
-        if (point(1) >= box(1)) && (point(2) >= box(2)) && (point(1) <= box(1)+box(3)) && (point(2) <= box(2)+box(4))
-            dice_values(j) = dice_values(j)+1;
-        end
-    end
-end
-
-imshow(I); hold on;
-viscircles(centers,radii);
-for j = 1 : length(bounding_boxes) - 1
-    rectangle('Position', [bounding_boxes(j,1,1), bounding_boxes(j,2,1), ...
-        bounding_boxes(j,3,1), bounding_boxes(j,4,1)],'EdgeColor','w','LineWidth',2);
-    text(bounding_boxes(j,1,1), bounding_boxes(j,2,1),string(dice_values(j)),'FontSize',32);
-end
-hold off;
+figure(1)
+processDice(I1, 1);
+figure(2)
+processDice(I2, 1);
+figure(3)
+processDice(I3, 1);
+figure(4)
+processDice(I4, 1);
+figure(5)
+processDice(I5, 1);
+figure(6)
+processDice(I6, 1);
+figure(7)
+processDice(I7, 1);
+pause;
+close all;

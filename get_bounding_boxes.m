@@ -1,5 +1,5 @@
 function bounding_boxes = get_bounding_boxes(I, area_threshhold)
-  bbpad = 10;
+  bbpad = -20;
   mergestructs = @(x,y) cell2struct([struct2cell(x);struct2cell(y)],[fieldnames(x);fieldnames(y)]);
   I = rgb2gray(I);
   edges = edge(I, 'Canny', .1);
@@ -11,8 +11,10 @@ function bounding_boxes = get_bounding_boxes(I, area_threshhold)
     BB = areas_cords(k).BoundingBox;
     BB(1) = BB(1) - bbpad;BB(2) = BB(2) - bbpad;
     BB(3) = BB(3) + bbpad*2;BB(4) = BB(4) + bbpad*2;
-    bounding_boxes(j, :, 1) = BB;
-    j = j + 1;
+    if BB(1) > 0 && BB(2) > 0 && BB(3) > 0 && BB(4) > 0
+        bounding_boxes(j, :, 1) = BB;
+        j = j + 1;
+    end
    end
   end
   % trim array
