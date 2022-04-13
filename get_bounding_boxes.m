@@ -1,17 +1,18 @@
-function bounding_boxes = get_bounding_boxes(I, area_threshhold)
-  bbpad = -20;
-  mergestructs = @(x,y) cell2struct([struct2cell(x);struct2cell(y)],[fieldnames(x);fieldnames(y)]);
+function bounding_boxes = get_bounding_boxes(I, min_thresh, max_thresh)
+  bbpad = -15;
   I = rgb2gray(I);
   edges = edge(I, 'Canny', .1);
-  areas_cords = mergestructs(regionprops(edges, 'BoundingBox'), regionprops(edges, 'Area'));
-  bounding_boxes = zeros(1, 4, length(areas_cords));
+  regions = regionprops(edges, 'BoundingBox');  
+  bounding_boxes = zeros(1, 4, length(regions));
   j = 1;
-  for k = 1 : length(areas_cords)
-   if areas_cords(k).Area > area_threshhold
-    BB = areas_cords(k).BoundingBox;
-    BB(1) = BB(1) - bbpad;BB(2) = BB(2) - bbpad;
-    BB(3) = BB(3) + bbpad*2;BB(4) = BB(4) + bbpad*2;
-    if BB(1) > 0 && BB(2) > 0 && BB(3) > 0 && BB(4) > 0
+  for k = 1 : length(regions)
+   BB = regions(k).BoundingBox;
+   if (BB(3) > min_thresh && BB(3) < max_thresh) && ...
+      (BB(4) > min_thresh && BB(4) < max_thresh) % min/max thresh
+    dif = abs(BB(3) - BB(4));   
+    if dif < 50 % testing for square like shapes
+        BB(1) = BB(1) - bbpad;BB(2) = BB(2) - bbpad;
+        BB(3) = BB(3) + bbpad*2;BB(4) = BB(4) + bbpad*2;
         bounding_boxes(j, :, 1) = BB;
         j = j + 1;
     end

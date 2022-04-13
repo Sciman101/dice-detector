@@ -1,6 +1,6 @@
 function [bounding_boxes, dice_values] = processDice(I, v)
     I = imresize(I, [1000 NaN]);
-    bounding_boxes = get_bounding_boxes(I,200);
+    bounding_boxes = get_bounding_boxes(I, 100, 300);
     [centers, radii] = pipcounter(I, 6, 22);
     % Count pips within each bounding box
     dice_values_temp = zeros(size(bounding_boxes,1),1,'uint8');
